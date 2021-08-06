@@ -30,6 +30,7 @@ import '../easy_loading.dart';
 
 class EasyLoadingContainer extends StatefulWidget {
   final Widget? indicator;
+  final Widget? textWidget;
   final String? status;
   final bool? dismissOnTap;
   final EasyLoadingToastPosition? toastPosition;
@@ -46,6 +47,7 @@ class EasyLoadingContainer extends StatefulWidget {
     this.maskType,
     this.completer,
     this.animation = true,
+    this.textWidget,
   }) : super(key: key);
 
   @override
@@ -180,10 +182,12 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 class _Indicator extends StatelessWidget {
   final Widget? indicator;
   final String? status;
+  final Widget? textWidget;
 
   const _Indicator({
     required this.indicator,
     required this.status,
+    this.textWidget,
   });
 
   @override
@@ -210,14 +214,18 @@ class _Indicator extends StatelessWidget {
               child: indicator,
             ),
           if (status != null)
-            Text(
-              status!,
-              style: EasyLoadingTheme.textStyle ??
-                  TextStyle(
-                    color: EasyLoadingTheme.textColor,
-                    fontSize: EasyLoadingTheme.fontSize,
-                  ),
-              textAlign: EasyLoadingTheme.textAlign,
+            Row(
+              children: [
+                Text(
+                  status!,
+                  style: EasyLoadingTheme.textStyle ??
+                      TextStyle(
+                        color: EasyLoadingTheme.textColor,
+                        fontSize: EasyLoadingTheme.fontSize,
+                      ),
+                  textAlign: EasyLoadingTheme.textAlign,
+                ),
+              ],
             ),
         ],
       ),

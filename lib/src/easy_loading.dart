@@ -187,6 +187,9 @@ class EasyLoading {
   /// info widget of loading
   Widget? infoWidget;
 
+  /// 文本组件
+  Widget? textWidget;
+
   Widget? _w;
 
   EasyLoadingOverlayEntry? overlayEntry;
@@ -469,6 +472,7 @@ class EasyLoading {
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       completer: completer,
+      textWidget: textWidget,
     );
     completer.future.whenComplete(() {
       _callback(EasyLoadingStatus.show);
