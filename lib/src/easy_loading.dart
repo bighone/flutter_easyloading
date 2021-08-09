@@ -187,9 +187,6 @@ class EasyLoading {
   /// info widget of loading
   Widget? infoWidget;
 
-  /// 文本组件
-  Widget? textWidget;
-
   Widget? _w;
 
   EasyLoadingOverlayEntry? overlayEntry;
@@ -368,15 +365,17 @@ class EasyLoading {
   }
 
   /// showToast [status] [duration] [toastPosition] [maskType]
-  static Future<void> showToast(
-    String status, {
+  static Future<void> showToast({
+    String? status,
     Duration? duration,
+    Widget? statusWidget,
     EasyLoadingToastPosition? toastPosition,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
   }) {
     return _instance._show(
       status: status,
+      statusWidget: statusWidget,
       duration: duration ?? EasyLoadingTheme.displayDuration,
       toastPosition: toastPosition ?? EasyLoadingTheme.toastPosition,
       maskType: maskType,
@@ -416,6 +415,7 @@ class EasyLoading {
   Future<void> _show({
     Widget? w,
     String? status,
+    Widget? statusWidget,
     Duration? duration,
     EasyLoadingMaskType? maskType,
     bool? dismissOnTap,
@@ -466,13 +466,13 @@ class EasyLoading {
     _w = EasyLoadingContainer(
       key: _key,
       status: status,
+      statusWidget: statusWidget,
       indicator: w,
       animation: animation,
       toastPosition: toastPosition,
       maskType: maskType,
       dismissOnTap: dismissOnTap,
       completer: completer,
-      textWidget: textWidget,
     );
     completer.future.whenComplete(() {
       _callback(EasyLoadingStatus.show);

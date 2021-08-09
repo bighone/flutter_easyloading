@@ -30,8 +30,8 @@ import '../easy_loading.dart';
 
 class EasyLoadingContainer extends StatefulWidget {
   final Widget? indicator;
-  final Widget? textWidget;
   final String? status;
+  final Widget? statusWidget;
   final bool? dismissOnTap;
   final EasyLoadingToastPosition? toastPosition;
   final EasyLoadingMaskType? maskType;
@@ -42,12 +42,12 @@ class EasyLoadingContainer extends StatefulWidget {
     Key? key,
     this.indicator,
     this.status,
+    this.statusWidget,
     this.dismissOnTap,
     this.toastPosition,
     this.maskType,
     this.completer,
     this.animation = true,
-    this.textWidget,
   }) : super(key: key);
 
   @override
@@ -168,6 +168,7 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
               _Indicator(
                 status: _status,
                 indicator: widget.indicator,
+                statusWidget: widget.statusWidget,
               ),
               _animationController,
               _alignment,
@@ -181,13 +182,13 @@ class EasyLoadingContainerState extends State<EasyLoadingContainer>
 
 class _Indicator extends StatelessWidget {
   final Widget? indicator;
+  final Widget? statusWidget;
   final String? status;
-  final Widget? textWidget;
 
   const _Indicator({
     required this.indicator,
-    required this.status,
-    this.textWidget,
+    this.status,
+    this.statusWidget,
   });
 
   @override
@@ -213,19 +214,15 @@ class _Indicator extends StatelessWidget {
                   : EdgeInsets.zero,
               child: indicator,
             ),
-          if (status != null)
-            Row(
-              children: [
-                Text(
-                  status!,
-                  style: EasyLoadingTheme.textStyle ??
-                      TextStyle(
-                        color: EasyLoadingTheme.textColor,
-                        fontSize: EasyLoadingTheme.fontSize,
-                      ),
-                  textAlign: EasyLoadingTheme.textAlign,
-                ),
-              ],
+          if (status != null || statusWidget != null)
+            DefaultTextStyle(
+              style: EasyLoadingTheme.textStyle ??
+                  TextStyle(
+                    color: EasyLoadingTheme.textColor,
+                    fontSize: EasyLoadingTheme.fontSize,
+                  ),
+              textAlign: EasyLoadingTheme.textAlign,
+              child: statusWidget ?? Text(status!),
             ),
         ],
       ),
